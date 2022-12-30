@@ -103,16 +103,21 @@ void AUTO(int Md)
     lcd.print("POWER(%): ");
     
     //PWM
+    //temp = (analog) power
+    //if (lux <= 40) ~ power 20%
     if (lux <= 40)
     {
       temp = 51;
       power = 20;
     }
+    //if (lux <= 800 && lux > 40) ~ power 20% -> 80%
+    //increase 1 lux ~ increase(204(80%) - 51(20%)) / (800 - 40)
     else if (lux > 40 && lux <=800)
     {
-      temp = ((lux -41) * 153 / 759) + 51;
-      power = ((lux-41) * 59 / 759) + 20;
+      temp = ((lux - 40) * 153 / 760) + 51;
+      power = ((lux - 40) * 60 / 760) + 20;
     }
+    //if (lux > 800) ~ power 100%
     else
     {
       temp = 255;
